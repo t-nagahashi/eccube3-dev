@@ -1,0 +1,40 @@
+version: '2'
+
+services:
+    app:
+        build: app
+        ports:
+            - "8080:80"
+            - "8443:443"
+        environment:
+            - TZ=Asia/Tokyo
+            - LANG=ja_JP.UTF-8
+            - DBSERVER=db
+            - DBUSER=postgres
+            - MAIL_HOST=mail
+            - COMPOSER_PROCESS_TIMEOUT=2000
+            - ROOT_URLPATH=/ec-cube/html
+            - PHP_XDEBUG_ENABLED=1
+            - XDEBUG_CONFIG=remote_host=10.254.254.254
+        links:
+            - postgres:db
+        volumes:
+            - ./ec-cube:/var/www/html/ec-cube
+
+    postgres:
+        build: postgres
+        environment:
+            - TZ=Asia/Tokyo
+            - LANG=ja_JP.UTF-8
+        ports:
+            - "5432:5432"
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+
+    mail:
+        image: schickling/mailcatcher
+        ports:
+            - "1080:1080"
+
+volumes:
+    postgres_data:

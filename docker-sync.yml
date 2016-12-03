@@ -1,0 +1,7 @@
+syncs:
+    sync-volume:
+        src: './ec-cube'
+        dest: '/var/www/html/ec-cube'
+        sync_strategy: 'unison'
+        sync_excludes: ['.git', '.idea', '.iml', 'app/cache/*', 'app/log/*', 'app/Plugin/*']
+        sync_excludes_type: 'Path'
